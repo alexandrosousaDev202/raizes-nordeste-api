@@ -12,8 +12,14 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'components' => [
+        'response' => [
+            'format' => yii\web\Response::FORMAT_JSON, 
+            'charset' => 'UTF-8',
+        ],
         'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser', 
+            ],
             'cookieValidationKey' => 'BMWYGg4_edSGUWl_6WFl9pXcUIYkrCiw',
         ],
         'cache' => [
@@ -42,14 +48,15 @@ $config = [
             ],
         ],
         'db' => $db,
-        /*
-        'urlManager' => [
+        
+       'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                ['class' => 'yii\rest\UrlRule', 'controller' => ['pedido', 'produto', 'unidade']],
             ],
         ],
-        */
+        
     ],
     'params' => $params,
 ];
