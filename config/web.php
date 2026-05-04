@@ -22,12 +22,21 @@ $config = [
             ],
             'cookieValidationKey' => 'BMWYGg4_edSGUWl_6WFl9pXcUIYkrCiw',
         ],
+
+        'jwt' => [
+            'class' => \bizley\jwt\Jwt::class,
+            'signer' => \bizley\jwt\Jwt::HS256,
+           'signingKey' => $_ENV['JWT_SECRET'],
+           'verifyingKey' => $_ENV['JWT_SECRET'],
+        ],
+
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
+            'identityClass' => 'app\models\Usuario',
+            'enableAutoLogin' => false,
+            'enableSession' => false,
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',
