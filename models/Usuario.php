@@ -1,6 +1,8 @@
 <?php
 
 namespace app\models;
+use yii\web\IdentityInterface;
+use Lcobucci\JWT\Validation\Constraint\SignedWith;
 
 use Yii;
 
@@ -18,7 +20,7 @@ use Yii;
  * @property Fidelidade $fidelidade
  * @property Pedido[] $pedidos
  */
-class Usuario extends \yii\db\ActiveRecord
+class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
 {
 
 
@@ -80,6 +82,67 @@ class Usuario extends \yii\db\ActiveRecord
     public function getPedidos()
     {
         return $this->hasMany(Pedido::class, ['usuario_id' => 'id']);
+    }
+
+    public static function findIdentity($id)
+    {
+        return static::findOne($id);
+    }
+
+  public static function findIdentityByAccessToken($token, $type = null)
+    {
+        try {
+            $jwt = \Yii::$app->jwt;
+            
+            $parsedToken = $jwt->parse((string) $token);
+            
+            $signer = $jwt->getConfiguration()->signer();
+            $key = $jwt->getConfiguration()->verificationKey();
+            $regraAssinatura = new \Lcobucci\JWT\Validation\Constraint\SignedWith($signer, $key);
+            
+            $validator = $jwt->getConfiguration()->validator();
+            $valido = $validator->validate($parsedToken, $regraAssinatura);
+            
+            if (!$valido) {
+                return null; 
+            }
+            
+            $uid = (int) $parsedToken->claims()->get('uid');
+            return static::findOne(['id' => $uid]);
+            
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAuthKey()
+    {
+        return null; 
+    }
+
+    public function validateAuthKey($authKey)
+    {
+        return false;
+    }
+
+    public function validarSenha($senha)
+    {
+        return \Yii::$app->security->validatePassword($senha, $this->senha_hash);
+    }
+
+    public function fields()
+    {
+        $fields = parent::fields();
+        
+        unset($fields['senha_hash']);
+        unset($fields['cpf']);
+        
+        return $fields;
     }
 
 }

@@ -116,4 +116,16 @@ class Pedido extends \yii\db\ActiveRecord
         return $this->hasOne(Usuario::class, ['id' => 'usuario_id']);
     }
 
+    public function fields()
+    {
+        $fields = parent::fields();
+        
+        $fields['cliente'] = 'usuario';
+        $fields['loja'] = 'unidade';
+        $fields['itens'] = 'pedidoItems';
+        $fields['pagamento'] = 'pagamentoMocks';
+        
+        return $fields;
+    }
+
 }
