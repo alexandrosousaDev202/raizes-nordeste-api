@@ -135,4 +135,14 @@ class Usuario extends \yii\db\ActiveRecord implements IdentityInterface
         return \Yii::$app->security->validatePassword($senha, $this->senha_hash);
     }
 
+    public function fields()
+    {
+        $fields = parent::fields();
+        
+        unset($fields['senha_hash']);
+        unset($fields['cpf']);
+        
+        return $fields;
+    }
+
 }
