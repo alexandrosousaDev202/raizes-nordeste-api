@@ -8,10 +8,27 @@ use app\models\Usuario;
 
 class AuthController extends Controller
 {
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+
+        $behaviors['corsFilter'] = [
+            'class' => \yii\filters\Cors::class,
+            'cors' => [
+                'Origin' => ['http://localhost:5173'], 
+                'Access-Control-Request-Method' => ['POST', 'OPTIONS'],
+                'Access-Control-Request-Headers' => ['*'],
+            ],
+        ];
+
+        return $behaviors;
+    }
+
     public function actionLogin()
     {
         $email = Yii::$app->request->post('email');
         $senha = Yii::$app->request->post('senha');
+        
 
         $usuario = Usuario::findOne(['email' => $email]);
 
