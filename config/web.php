@@ -62,7 +62,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule', 'controller' => ['pedido', 'produto', 'unidade', 'pedido-item']],
+                ['class' => 'yii\rest\UrlRule', 'controller' => ['pedido', 'produto', 'unidade', 'pedido-item', 'pagamento-mock']],
             ],
         ],
         
