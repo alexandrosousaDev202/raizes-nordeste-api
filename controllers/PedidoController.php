@@ -3,18 +3,18 @@
 namespace app\controllers;
 
 use yii\rest\ActiveController;
-use bizley\jwt\JwtHttpBearerAuth;
+use yii\filters\auth\HttpBearerAuth;
 
 class PedidoController extends ActiveController
 {
     public $modelClass = 'app\models\Pedido';
 
-    public function behaviors()
+   public function behaviors()
     {
         $behaviors = parent::behaviors();
         
         $behaviors['authenticator'] = [
-            'class' => JwtHttpBearerAuth::class,
+            'class' => HttpBearerAuth::class, 
         ];
         
         return $behaviors;

@@ -5,16 +5,16 @@ namespace app\controllers;
 use yii\rest\ActiveController;
 use yii\filters\auth\HttpBearerAuth;
 
-class UnidadeController extends ActiveController
+class PedidoItemController extends ActiveController
 {
-    public $modelClass = 'app\models\Unidade';
+    public $modelClass = 'app\models\PedidoItem'; 
 
     public function behaviors()
     {
         $behaviors = parent::behaviors();
         
         $behaviors['authenticator'] = [
-            'class' => HttpBearerAuth::class, 
+            'class' => HttpBearerAuth::class,
         ];
         
         return $behaviors;
