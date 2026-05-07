@@ -4,10 +4,11 @@ namespace app\controllers;
 
 use yii\rest\ActiveController;
 use yii\filters\auth\HttpBearerAuth;
+use app\models\PedidoItem;
 
 class PedidoItemController extends ActiveController
 {
-    public $modelClass = PedidoItem::class; 
+    public $modelClass = PedidoItem::class;
 
      public function behaviors()
     {

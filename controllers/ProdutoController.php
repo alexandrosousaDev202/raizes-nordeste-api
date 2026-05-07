@@ -3,7 +3,8 @@
 namespace app\controllers;
 
 use yii\rest\ActiveController;
-use yii\filters\auth\HttpBearerAuth; 
+use yii\filters\auth\HttpBearerAuth;
+use app\models\Produto;
 
 class ProdutoController extends ActiveController
 {
