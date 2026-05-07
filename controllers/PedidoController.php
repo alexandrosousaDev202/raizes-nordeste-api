@@ -26,7 +26,7 @@ class PedidoController extends ActiveController
         ];
         
         $behaviors['authenticator'] = $auth;
-        $behaviors['authenticator']['class'] = \yii\filters\auth\HttpBearerAuth::class;
+        $behaviors['authenticator']['class'] = HttpBearerAuth::class;
         $behaviors['authenticator']['except'] = ['options'];
 
         return $behaviors;
