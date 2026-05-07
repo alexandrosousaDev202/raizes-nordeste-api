@@ -1,5 +1,8 @@
 <?php
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 $env = getenv('YII_ENV') ?: 'dev';
 defined('YII_ENV') or define('YII_ENV', $env);
 
