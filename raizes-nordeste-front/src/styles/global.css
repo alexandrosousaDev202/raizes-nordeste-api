@@ -1,0 +1,31 @@
+:root {
+  --color-primary: #E88D14;
+  --color-secondary: #1A5336;
+  --color-background: #FDFBF7;
+  --color-surface: #FFFFFF;
+  --color-border: #E0E0E0;
+  --color-text-primary: #1A5336;
+  --color-text-secondary: #555555;
+
+  --color-btn-finalizar: #2e7d32;
+  --color-btn-finalizar-hover: #1b5e20;
+  --color-btn-login: #d32f2f;
+  --color-btn-login-hover: #b71c1c;
+
+  --color-card-shadow: rgba(26, 83, 54, 0.1);
+
+  --font-family: "Roboto", "Helvetica", "Arial", sans-serif;
+
+  --radius-card: 4;
+  --radius-button: 3;
+  --radius-paper: 2;
+
+  --drawer-width: 350px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-background);
+  font-family: var(--font-family);
+}

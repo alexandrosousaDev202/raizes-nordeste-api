@@ -4,19 +4,29 @@ namespace app\controllers;
 
 use yii\rest\ActiveController;
 use yii\filters\auth\HttpBearerAuth;
+use app\models\PedidoItem;
 
 class PedidoItemController extends ActiveController
 {
-    public $modelClass = 'app\models\PedidoItem'; 
+    public $modelClass = PedidoItem::class;
 
-    public function behaviors()
+     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        
-        $behaviors['authenticator'] = [
-            'class' => HttpBearerAuth::class,
+        $auth = $behaviors['authenticator'];
+        unset($behaviors['authenticator']);
+        $behaviors['corsFilter'] = [
+            'class' => \yii\filters\Cors::class,
+            'cors' => [
+                'Origin' => ['http://localhost:5173'],
+                'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+                'Access-Control-Request-Headers' => ['*'],
+            ],
         ];
-        
+        $behaviors['authenticator'] = $auth;
+        $behaviors['authenticator']['class'] = HttpBearerAuth::class;
+        $behaviors['authenticator']['except'] = ['options'];
+
         return $behaviors;
     }
 }
