@@ -2,13 +2,8 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => $_ENV['DB_DSN'],
-    'username' => $_ENV['DB_USERNAME'],
-    'password' => $_ENV['DB_PASSWORD'],
+    'dsn' => getenv('DB_DSN') ?: 'pgsql:host=localhost;port=5432;dbname=raizes_nordeste',
+    'username' => getenv('DB_USER') ?: 'postgres',
+    'password' => getenv('DB_PASS') ?: '3636',
     'charset' => 'utf8',
-
-    // Schema cache options (for production environment)
-    //'enableSchemaCache' => true,
-    //'schemaCacheDuration' => 60,
-    //'schemaCache' => 'cache',
 ];
