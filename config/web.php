@@ -22,12 +22,11 @@ $config = [
             ],
             'cookieValidationKey' => 'BMWYGg4_edSGUWl_6WFl9pXcUIYkrCiw',
         ],
-
         'jwt' => [
             'class' => \bizley\jwt\Jwt::class,
             'signer' => \bizley\jwt\Jwt::HS256,
-           'signingKey' => $_ENV['JWT_SECRET'],
-           'verifyingKey' => $_ENV['JWT_SECRET'],
+            'signingKey' => getenv('JWT_SECRET') ?: 'chave-secreta-local-apenas-para-dev',
+            'verifyingKey' => getenv('JWT_SECRET') ?: 'chave-secreta-local-apenas-para-dev',
         ],
 
         'cache' => [
