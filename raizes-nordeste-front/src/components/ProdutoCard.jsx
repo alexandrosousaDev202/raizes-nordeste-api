@@ -1,8 +1,9 @@
-import { Grid, Card, CardContent, CardActions, Typography, Button, Box } from '@mui/material';
+import Grid from '@mui/material/Grid';
+import { Card, CardContent, CardActions, Typography, Button, Box } from '@mui/material';
 
 export default function ProdutoCard({ produto, onAdicionar }) {
   return (
-    <Grid item xs={12} sm={6} md={4}>
+    <Grid size={{ xs: 12, sm: 6, md: 4 }}>
       <Card 
         elevation={0}
         sx={{ 
@@ -21,11 +22,25 @@ export default function ProdutoCard({ produto, onAdicionar }) {
       >
         <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', p: 3, pb: 0 }}>
           
-          <Typography variant="h6" fontWeight="900" color="secondary.main" sx={{ lineHeight: 1.2, mb: 1 }}>
+          <Typography variant="h6" fontWeight="900" color="secondary.main" sx={{ 
+            lineHeight: 1.2, 
+            mb: 1,
+            display: '-webkit-box',
+            WebkitLineClamp: 1,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden'
+          }}>
             {produto.nome}
           </Typography>
           
-          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          <Typography variant="body2" color="text.secondary" sx={{ 
+            mb: 2,
+            minHeight: '2.6em',
+            display: '-webkit-box',
+            WebkitLineClamp: 2,
+            WebkitBoxOrient: 'vertical',
+            overflow: 'hidden'
+          }}>
             {produto.descricao}
           </Typography>
           
