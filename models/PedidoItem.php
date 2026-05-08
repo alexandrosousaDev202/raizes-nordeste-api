@@ -76,4 +76,13 @@ class PedidoItem extends \yii\db\ActiveRecord
         return $this->hasOne(Produto::class, ['id' => 'produto_id']);
     }
 
+    public function fields()
+    {
+        $fields = parent::fields();
+        $fields['produto'] = function () {
+            return $this->produto ? $this->produto->nome : null;
+        };
+        return $fields;
+    }
+
 }

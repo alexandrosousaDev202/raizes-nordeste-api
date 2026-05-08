@@ -1,14 +1,19 @@
 import { useEffect, useState } from 'react';
 import { 
-  Container, Typography, Box, Grid, Badge, AppBar, Toolbar, IconButton,
+  Container, Typography, Box, Badge, AppBar, Toolbar, IconButton,
   Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button,
-  List, ListItem, ListItemText, Divider, Chip
+  List, ListItem, Divider, Chip, Snackbar, Alert, Slide
 } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import api from '../services/api';
 import ProdutoCard from '../components/ProdutoCard';
 import CarrinhoDrawer from '../components/CarrinhoDrawer';
+
+function SlideTransition(props) {
+  return <Slide {...props} direction="up" />;
+}
 
 export default function Cardapio() {
   const [produtos, setProdutos] = useState([]);
@@ -22,13 +27,28 @@ export default function Cardapio() {
   const [modalPedidosAberto, setModalPedidosAberto] = useState(false);
   const [historicoPedidos, setHistoricoPedidos] = useState([]);
 
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+
+  const mostrarAlerta = (message, severity = 'success') => {
+    setSnackbar({ open: true, message, severity });
+  };
+
+  const fecharAlerta = (_, reason) => {
+    if (reason === 'clickaway') return;
+    setSnackbar(prev => ({ ...prev, open: false }));
+  };
+
   useEffect(() => {
     api.get('/produtos')
       .then(response => setProdutos(response.data))
       .catch(() => {});
   }, []);
 
-  const adicionarAoCarrinho = (produto) => setCarrinho([...carrinho, produto]);
+  const adicionarAoCarrinho = (produto) => {
+    setCarrinho([...carrinho, produto]);
+    mostrarAlerta(`🛒 "${produto.nome}" adicionado à sacola!`, 'success');
+  };
+
   const removerDoCarrinho = (index) => setCarrinho(carrinho.filter((_, i) => i !== index));
   const valorTotal = carrinho.reduce((total, item) => total + Number(item.preco), 0);
 
@@ -39,7 +59,7 @@ export default function Cardapio() {
 
   const confirmarPedido = async () => {
     if (!telefone || !nome) {
-      alert("Por favor, preencha seu nome e telefone!");
+      mostrarAlerta('⚠️ Por favor, preencha seu nome e telefone!', 'warning');
       return;
     }
 
@@ -66,22 +86,37 @@ export default function Cardapio() {
         });
       }
 
+      const meusPedidoIds = JSON.parse(localStorage.getItem('@RaizesPedidos') || '[]');
+      meusPedidoIds.push(pedidoId);
+      localStorage.setItem('@RaizesPedidos', JSON.stringify(meusPedidoIds));
+
       setCarrinho([]);
       setModalAberto(false);
-      alert(`🎉 Sucesso, ${nome}! Seu pedido #${pedidoId} já vai para a cozinha!`);
+      mostrarAlerta(`🎉 Sucesso, ${nome}! Seu pedido #${pedidoId} foi confirmado. Você receberá as atualizações de status no seu WhatsApp!`, 'success');
       
     } catch {
-      alert('Ops! Erro ao finalizar. Verifique sua conexão.');
+      mostrarAlerta('❌ Ops! Erro ao finalizar. Verifique sua conexão.', 'error');
     }
   };
 
   const abrirMeusPedidos = async () => {
     try {
+      const meusPedidoIds = JSON.parse(localStorage.getItem('@RaizesPedidos') || '[]');
+      
+      if (meusPedidoIds.length === 0) {
+        setHistoricoPedidos([]);
+        setModalPedidosAberto(true);
+        return;
+      }
+
       const response = await api.get('/pedidos');
-      setHistoricoPedidos(response.data.reverse()); 
+      const meusPedidos = response.data
+        .filter(pedido => meusPedidoIds.includes(pedido.id))
+        .reverse();
+      setHistoricoPedidos(meusPedidos); 
       setModalPedidosAberto(true);
     } catch {
-      alert("Não foi possível carregar os pedidos.");
+      mostrarAlerta('❌ Não foi possível carregar os pedidos.', 'error');
     }
   };
 
@@ -89,25 +124,27 @@ export default function Cardapio() {
     <>
       <AppBar position="static" sx={{ backgroundColor: 'primary.main', mb: 4 }} elevation={0}>
         <Container maxWidth="md">
-          <Toolbar disableGutters>
-            <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: '900', color: 'white' }}>
+          <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
+            <Typography variant="h6" sx={{ fontWeight: '900', color: 'white' }}>
               Raízes do Nordeste
             </Typography>
             
-            <Button 
-              color="inherit" 
-              onClick={abrirMeusPedidos} 
-              sx={{ mr: 2, fontWeight: 'bold' }} 
-              startIcon={<AssignmentIcon />}
-            >
-              Meus Pedidos
-            </Button>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <Button 
+                color="inherit" 
+                onClick={abrirMeusPedidos} 
+                sx={{ fontWeight: 'bold' }} 
+                startIcon={<AssignmentIcon />}
+              >
+                Meus Pedidos
+              </Button>
 
-            <IconButton color="inherit" onClick={() => setCarrinhoAberto(true)}>
-              <Badge badgeContent={carrinho.length} color="secondary">
-                <ShoppingCartIcon />
-              </Badge>
-            </IconButton>
+              <IconButton color="inherit" onClick={() => setCarrinhoAberto(true)}>
+                <Badge badgeContent={carrinho.length} color="secondary">
+                  <ShoppingCartIcon />
+                </Badge>
+              </IconButton>
+            </Box>
           </Toolbar>
         </Container>
       </AppBar>
@@ -165,23 +202,28 @@ export default function Cardapio() {
               <Typography sx={{ p: 3, textAlign: 'center' }}>Você ainda não tem pedidos.</Typography>
             ) : (
               <List disablePadding>
-                {historicoPedidos.map((pedido) => (
+                {historicoPedidos.slice(0, 10).map((pedido) => (
                   <Box key={pedido.id}>
-                    <ListItem sx={{ py: 2 }}>
-                      <ListItemText 
-                        primary={
-                          <Typography fontWeight="bold">
-                            Pedido #{pedido.id}
-                          </Typography>
-                        } 
-                        secondary={`R$ ${Number(pedido.valor_total).toFixed(2).replace('.', ',')} • ${pedido.canal_pedido}`} 
-                      />
-                      <Chip 
-                        label={pedido.status.toUpperCase()} 
-                        color={pedido.status === 'pendente' ? 'warning' : 'success'} 
-                        size="small" 
-                        sx={{ fontWeight: 'bold' }}
-                      />
+                    <ListItem sx={{ py: 2, flexDirection: 'column', alignItems: 'flex-start' }}>
+                      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', mb: 1 }}>
+                        <Typography fontWeight="bold">
+                          Pedido #{pedido.id}
+                        </Typography>
+                        <Chip 
+                          label={pedido.status.toUpperCase()} 
+                          color={pedido.status === 'pendente' ? 'warning' : 'success'} 
+                          size="small" 
+                          sx={{ fontWeight: 'bold' }}
+                        />
+                      </Box>
+                      {pedido.itens && pedido.itens.length > 0 && (
+                        <Typography variant="body2" color="text.secondary" sx={{ mb: 0.5 }}>
+                          {pedido.itens.map(item => `${item.quantidade}x ${item.produto || 'Produto'}`).join(', ')}
+                        </Typography>
+                      )}
+                      <Typography variant="body2" fontWeight="bold" color="primary.main">
+                        R$ {Number(pedido.valor_total).toFixed(2).replace('.', ',')} • {pedido.canal_pedido}
+                      </Typography>
                     </ListItem>
                     <Divider />
                   </Box>
@@ -197,6 +239,30 @@ export default function Cardapio() {
         </Dialog>
 
       </Container>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={fecharAlerta}
+        TransitionComponent={SlideTransition}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      >
+        <Alert
+          onClose={fecharAlerta}
+          severity={snackbar.severity}
+          variant="filled"
+          elevation={6}
+          sx={{ 
+            width: '100%', 
+            fontWeight: 'bold', 
+            fontSize: '0.95rem',
+            borderRadius: 3,
+            boxShadow: '0 8px 32px rgba(0,0,0,0.2)'
+          }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 }
