@@ -6,7 +6,15 @@ export default function CarrinhoDrawer({
 }) {
   return (
     <Drawer anchor="right" open={aberto} onClose={onClose}>
-      <Box sx={{ width: 'var(--drawer-width)', p: 3, display: 'flex', flexDirection: 'column', height: '100%' }}>
+      <Box sx={{ 
+        width: { xs: '100vw', sm: 350 }, 
+        maxWidth: '100vw',
+        p: 3, 
+        display: 'flex', 
+        flexDirection: 'column', 
+        height: '100%',
+        boxSizing: 'border-box'
+      }}>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
           <Typography variant="h6" fontWeight="bold">Seu Pedido</Typography>
           <IconButton onClick={onClose}>
@@ -15,7 +23,12 @@ export default function CarrinhoDrawer({
         </Box>
         <Divider />
 
-        <List sx={{ flexGrow: 1, overflowY: 'auto' }}>
+        <List sx={{ 
+          flexGrow: 1, 
+          overflowY: 'auto',
+          '&::-webkit-scrollbar': { display: 'none' },
+          scrollbarWidth: 'none'
+        }}>
           {carrinho.length === 0 ? (
             <Typography color="text.secondary" sx={{ mt: 2, textAlign: 'center' }}>
               O carrinho está vazio.

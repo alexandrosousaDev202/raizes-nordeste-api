@@ -124,19 +124,31 @@ export default function Cardapio() {
     <>
       <AppBar position="static" sx={{ backgroundColor: 'primary.main', mb: 4 }} elevation={0}>
         <Container maxWidth="md">
-          <Toolbar disableGutters sx={{ justifyContent: 'space-between' }}>
-            <Typography variant="h6" sx={{ fontWeight: '900', color: 'white' }}>
+          <Toolbar disableGutters sx={{ justifyContent: 'space-between', minHeight: { xs: 56 } }}>
+            <Typography variant="h6" sx={{ 
+              fontWeight: '900', 
+              color: 'white', 
+              fontSize: { xs: '1rem', sm: '1.25rem' },
+              whiteSpace: 'nowrap'
+            }}>
               Raízes do Nordeste
             </Typography>
             
-            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
               <Button 
                 color="inherit" 
                 onClick={abrirMeusPedidos} 
-                sx={{ fontWeight: 'bold' }} 
+                sx={{ 
+                  fontWeight: 'bold',
+                  minWidth: 'auto',
+                  px: { xs: 1, sm: 2 },
+                  fontSize: { xs: '0.75rem', sm: '0.875rem' }
+                }} 
                 startIcon={<AssignmentIcon />}
               >
-                Meus Pedidos
+                <Box component="span" sx={{ display: { xs: 'none', sm: 'inline' } }}>
+                  Meus Pedidos
+                </Box>
               </Button>
 
               <IconButton color="inherit" onClick={() => setCarrinhoAberto(true)}>
