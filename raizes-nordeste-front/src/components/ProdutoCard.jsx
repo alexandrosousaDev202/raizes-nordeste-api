@@ -1,5 +1,5 @@
 import Grid from '@mui/material/Grid';
-import { Card, CardContent, CardActions, Typography, Button, Box } from '@mui/material';
+import { Card, CardContent, CardActions, CardMedia, Typography, Button, Box } from '@mui/material';
 
 export default function ProdutoCard({ produto, onAdicionar }) {
   return (
@@ -20,6 +20,15 @@ export default function ProdutoCard({ produto, onAdicionar }) {
           }
         }}
       >
+        {produto.imagem_url && (
+          <CardMedia
+            component="img"
+            height="160"
+            image={produto.imagem_url}
+            alt={produto.nome}
+            sx={{ objectFit: 'cover' }}
+          />
+        )}
         <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', p: 3, pb: 0 }}>
           
           <Typography variant="h6" fontWeight="900" color="secondary.main" sx={{ 
