@@ -25,7 +25,7 @@ class PedidoItemController extends ActiveController
         ];
         $behaviors['authenticator'] = $auth;
         $behaviors['authenticator']['class'] = HttpBearerAuth::class;
-        $behaviors['authenticator']['except'] = ['options'];
+        $behaviors['authenticator']['except'] = ['create', 'options'];
 
         return $behaviors;
     }
