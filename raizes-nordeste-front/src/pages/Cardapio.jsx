@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { 
   Container, Typography, Box, Badge, AppBar, Toolbar, IconButton,
   Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button,
-  List, ListItem, Divider, Chip, Snackbar, Alert, Slide
+  List, ListItem, Divider, Chip, Snackbar, Alert, Slide, CircularProgress
 } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -17,6 +17,7 @@ function SlideTransition(props) {
 
 export default function Cardapio() {
   const [produtos, setProdutos] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [carrinho, setCarrinho] = useState([]);
   const [carrinhoAberto, setCarrinhoAberto] = useState(false);
   
@@ -40,8 +41,13 @@ export default function Cardapio() {
 
   useEffect(() => {
     api.get('/produtos')
-      .then(response => setProdutos(response.data))
-      .catch(() => {});
+      .then(response => {
+        setProdutos(response.data);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
   }, []);
 
   const adicionarAoCarrinho = (produto) => {
@@ -166,13 +172,24 @@ export default function Cardapio() {
           Nosso Cardápio
         </Typography>
 
-        <Grid container spacing={3}>
-          {produtos.map((produto) => (
-            <ProdutoCard key={produto.id} produto={produto} onAdicionar={adicionarAoCarrinho} />
-          ))}
-        </Grid>
-        
-        {produtos.length === 0 && <Typography sx={{ mt: 4, textAlign: 'center' }}>Nenhum produto encontrado...</Typography>}
+        {loading ? (
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 10, mb: 10 }}>
+            <CircularProgress color="success" />
+            <Typography variant="body1" sx={{ mt: 2, color: 'text.secondary' }}>
+              Acendendo o fogão e preparando o cardápio...
+            </Typography>
+          </Box>
+        ) : produtos.length > 0 ? (
+          <Grid container spacing={3}>
+            {produtos.map((produto) => (
+              <ProdutoCard key={produto.id} produto={produto} onAdicionar={adicionarAoCarrinho} />
+            ))}
+          </Grid>
+        ) : (
+          <Typography variant="h6" align="center" sx={{ mt: 5 }}>
+            Nenhum produto encontrado...
+          </Typography>
+        )}
 
         <CarrinhoDrawer 
           aberto={carrinhoAberto} 
