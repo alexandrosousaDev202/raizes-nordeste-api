@@ -1,0 +1,364 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: raizes do nordeste
+meta:
+  id: wrk_2aeb71ba1b6148339edeb67f4549ce40
+  created: 1777849578504
+  modified: 1777849578504
+  description: ""
+collection:
+  - url: http://localhost:8080/produtos
+    name: New Request
+    meta:
+      id: req_b65539519abf472eb83d89b6ff5bae47
+      created: 1777849584150
+      modified: 1778103557979
+      isPrivate: false
+      description: ""
+      sortKey: -1777849584150
+    method: POST
+    body:
+      mimeType: application/json
+      text: >-
+        {
+        	"nome": "Acarajé Tradicional",
+        	"descricao": "Bolinho de feijão fradinho frito no azeite de dendê, recheado com vatapá, caruru, camarão seco e vinagrete.",
+        	"preco": 25.00,
+        	"categoria": "Porções"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.3.1
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyYWl6ZXMtbm9yZGVzdGUtYXBpIiwiaWF0IjoxNzc3OTMxNDIwLjQwMzIzMiwiZXhwIjoxNzc3OTM4NjIwLjQwMzIzMiwidWlkIjoxfQ.ps3Dh-QDV5femcYnmuXLuEP160nqOEqB4h3vJog6RbI
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/auth/login
+    name: New Request
+    meta:
+      id: req_bb489d7d25314adc9aee556a51108eda
+      created: 1777929788585
+      modified: 1777929850342
+      isPrivate: false
+      description: ""
+      sortKey: -1777929788585
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+            "email": "alexandro@teste.com",
+            "senha": "minhasenha123"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.5.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/auth/debug-token
+    name: New Request
+    meta:
+      id: req_4205a5061d8c4f169ab7db88cb56e6cf
+      created: 1777931106833
+      modified: 1777931531749
+      isPrivate: false
+      description: ""
+      sortKey: -1777931106833
+    method: POST
+    body:
+      mimeType: application/json
+      text: >-
+        {
+            "token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyYWl6ZXMtbm9yZGVzdGUtYXBpIiwiaWF0IjoxNzc3OTMxNDIwLjQwMzIzMiwiZXhwIjoxNzc3OTM4NjIwLjQwMzIzMiwidWlkIjoxfQ.ps3Dh-QDV5femcYnmuXLuEP160nqOEqB4h3vJog6RbI"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.5.0
+        description: ""
+        disabled: false
+    authentication:
+      type: none
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/unidades
+    name: New Request
+    meta:
+      id: req_caea7073e6f84387b1f3a5022b8255fd
+      created: 1777932593174
+      modified: 1777934256895
+      isPrivate: false
+      description: ""
+      sortKey: -1777932593174
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+            "nome": "Loja Matriz - Ubajara",
+            "endereco": "Rua Principal, 123 - Centro",
+            "ativa": true
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.5.0
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyYWl6ZXMtbm9yZGVzdGUtYXBpIiwiaWF0IjoxNzc3OTM0MTgzLjU0NjYxNiwiZXhwIjoxNzc3OTQxMzgzLjU0NjYxNiwidWlkIjoxfQ.wpQ4GATpLnyZv9AfSv_6gbA9mqZYsUn7kLVlMvwJuUI
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/pedidos
+    name: New Request
+    meta:
+      id: req_6534880f928540d78c7b7b8ffb6bda15
+      created: 1777934654340
+      modified: 1778097571927
+      isPrivate: false
+      description: ""
+      sortKey: -1777934654340
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"usuario_id": 1,
+        	"unidade_id": 1,
+        	"canal_pedido": "web",
+        	"status": "pendente",
+        	"valor_total": 18.50
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.5.0
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyYWl6ZXMtbm9yZGVzdGUtYXBpIiwiaWF0IjoxNzc3OTM0MTgzLjU0NjYxNiwiZXhwIjoxNzc3OTQxMzgzLjU0NjYxNiwidWlkIjoxfQ.wpQ4GATpLnyZv9AfSv_6gbA9mqZYsUn7kLVlMvwJuUI
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/pedido-items
+    name: New Request
+    meta:
+      id: req_ea23ef73ac3d4f20b08c42382eee916e
+      created: 1777934832828
+      modified: 1778097631566
+      isPrivate: false
+      description: ""
+      sortKey: -1777934832828
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"pedido_id": 3, 
+        	"produto_id": 1,
+        	"quantidade": 1,
+        	"preco_unitario": 18.50
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.5.0
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyYWl6ZXMtbm9yZGVzdGUtYXBpIiwiaWF0IjoxNzc3OTM0MTgzLjU0NjYxNiwiZXhwIjoxNzc3OTQxMzgzLjU0NjYxNiwidWlkIjoxfQ.wpQ4GATpLnyZv9AfSv_6gbA9mqZYsUn7kLVlMvwJuUI
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/pagamento-mocks
+    name: New Request
+    meta:
+      id: req_7a4c1c30eb1042ee8331d44493e80a09
+      created: 1777987935379
+      modified: 1777988002452
+      isPrivate: false
+      description: ""
+      sortKey: -1777987935379
+    method: POST
+    body:
+      mimeType: application/json
+      text: >-
+        {
+            "pedido_id": 1,
+            "metodo": "pix",
+            "status_transacao": "aprovado",
+            "payload_retorno": "{\"codigo_autorizacao\": \"PIX-123456789\", \"mensagem\": \"Pagamento confirmado via webhook.\"}"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.5.0
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyYWl6ZXMtbm9yZGVzdGUtYXBpIiwiaWF0IjoxNzc3OTM0MTgzLjU0NjYxNiwiZXhwIjoxNzc3OTQxMzgzLjU0NjYxNiwidWlkIjoxfQ.wpQ4GATpLnyZv9AfSv_6gbA9mqZYsUn7kLVlMvwJuUI
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/pedidos/1
+    name: New Request
+    meta:
+      id: req_23518415a518401498b37e23a5d375a5
+      created: 1777990439501
+      modified: 1777990533136
+      isPrivate: false
+      description: ""
+      sortKey: -1777990439501
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.5.0
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyYWl6ZXMtbm9yZGVzdGUtYXBpIiwiaWF0IjoxNzc3OTM0MTgzLjU0NjYxNiwiZXhwIjoxNzc3OTQxMzgzLjU0NjYxNiwidWlkIjoxfQ.wpQ4GATpLnyZv9AfSv_6gbA9mqZYsUn7kLVlMvwJuUI
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://localhost:8080/produtos/1
+    name: New Request
+    meta:
+      id: req_0f4efd20b69f4333a8a47ac018d0246c
+      created: 1778106883418
+      modified: 1778106920733
+      isPrivate: false
+      description: ""
+      sortKey: -1778106883418
+    method: PUT
+    body:
+      mimeType: application/json
+      text: >-
+        {
+        	"descricao": "Massa fina de tapioca recheada com suculenta carne de sol desfiada e queijo coalho derretido."
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/12.5.0
+        description: ""
+        disabled: false
+    authentication:
+      type: bearer
+      token: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJyYWl6ZXMtbm9yZGVzdGUtYXBpIiwiaWF0IjoxNzc3OTM0MTgzLjU0NjYxNiwiZXhwIjoxNzc3OTQxMzgzLjU0NjYxNiwidWlkIjoxfQ.wpQ4GATpLnyZv9AfSv_6gbA9mqZYsUn7kLVlMvwJuUI
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: ""
+    name: New Request
+    meta:
+      id: req_aa66499271aa48ecb3a48faee4af7ca7
+      created: 1778334464046
+      modified: 1778334464046
+      isPrivate: false
+      description: ""
+      sortKey: -1778334464046
+    method: GET
+    headers:
+      - name: User-Agent
+        value: insomnia/12.5.0
+        description: ""
+        disabled: false
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_15ae0a39aa5a155981dabc52fe98064c95ac0a29
+    created: 1777849578507
+    modified: 1778106923548
+  cookies:
+    - id: fd1af71f-bccb-4a67-b89b-4f91f085942b
+      key: _csrf
+      value: d90c806c68298854577ec08a6ce934e5dd6d3fb85c7c04c9511893f88270746da%3A2%3A%7Bi%3A0%3Bs%3A5%3A%22_csrf%22%3Bi%3A1%3Bs%3A32%3A%221fKGPQ5xz4QJ6iJMvG4MRarR82XC-GwH%22%3B%7D
+      domain: localhost
+      path: /
+      secure: false
+      httpOnly: true
+      hostOnly: true
+environments:
+  name: Base Environment
+  meta:
+    id: env_15ae0a39aa5a155981dabc52fe98064c95ac0a29
+    created: 1777849578506
+    modified: 1777849578506
+    isPrivate: false
