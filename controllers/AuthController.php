@@ -15,7 +15,10 @@ class AuthController extends Controller
         $behaviors['corsFilter'] = [
             'class' => \yii\filters\Cors::class,
             'cors' => [
-                'Origin' => ['http://localhost:5173'], 
+                'Origin' => [
+                    'https://raizes-nordeste-api.vercel.app', 
+                    'http://localhost:5173'
+                ], 
                 'Access-Control-Request-Method' => ['POST', 'OPTIONS'],
                 'Access-Control-Request-Headers' => ['*'],
             ],

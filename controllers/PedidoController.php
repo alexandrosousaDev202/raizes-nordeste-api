@@ -21,7 +21,7 @@ class PedidoController extends ActiveController
         $behaviors['corsFilter'] = [
             'class' => Cors::class,
             'cors' => [
-                'Origin' => ['*'],
+                'Origin' => ['https://raizes-nordeste-api.vercel.app', 'http://localhost:5173'],
                 'Access-Control-Request-Method' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
                 'Access-Control-Request-Headers' => ['*'],
             ],
